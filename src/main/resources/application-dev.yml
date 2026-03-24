@@ -1,0 +1,33 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+# Logging - Verbose for development
+logging:
+  level:
+    root: INFO
+    com.blogpoint: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    io.jsonwebtoken: DEBUG
+    org.springdoc: INFO
+
+# Development-specific configurations
+server:
+  error:
+    include-stacktrace: always
+
+# Show full error messages in development
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true

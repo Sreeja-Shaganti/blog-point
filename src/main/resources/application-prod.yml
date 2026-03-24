@@ -1,0 +1,66 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:postgres}:${DB_PORT:5432}/${DB_NAME:blogpoint}
+    username: ${DB_USERNAME:blogpoint}
+    password: ${DB_PASSWORD:password}
+    
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 10
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      leak-detection-threshold: 60000
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+
+server:
+  port: ${SERVER_PORT:8080}
+  compression:
+    enabled: true
+    min-response-size: 1024
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+  
+  error:
+    include-stacktrace: never
+    include-message: always
+    include-binding-errors: never
+
+# Production JWT (MUST use environment variables)
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: ${JWT_EXPIRATION:3600000}
+    refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800000}
+
+# Logging - Production level
+logging:
+  level:
+    root: WARN
+    com.blogpoint: INFO
+    org.springframework: WARN
+    org.springframework.security: WARN
+    org.hibernate: WARN
+    io.jsonwebtoken: WARN
+  
+  file:
+    name: /var/log/blogpoint/application.log
+    max-size: 10MB
+    max-history: 30
+    total-size-cap: 1GB
+
+# Swagger disabled in production (optional)
+springdoc:
+  swagger-ui:
+    enabled: ${SWAGGER_ENABLED:false}
+  api-docs:
+    enabled: ${API_DOCS_ENABLED:false}
