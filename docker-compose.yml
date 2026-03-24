@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: blogpoint-postgres
+    environment:
+      POSTGRES_DB: blogpoint
+      POSTGRES_USER: blogpoint
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docs/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./docs/data.sql:/docker-entrypoint-initdb.d/02-data.sql
+    networks:
+      - blogpoint-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U blogpoint -d blogpoint"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: blogpoint-app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/blogpoint
+      SPRING_DATASOURCE_USERNAME: blogpoint
+      SPRING_DATASOURCE_PASSWORD: password
+      APP_JWT_SECRET: mySecretKey
+      APP_JWT_EXPIRATION: 3600000
+      APP_JWT_REFRESH_EXPIRATION: 604800000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - blogpoint-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  blogpoint-network:
+    driver: bridge
