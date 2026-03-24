@@ -1,0 +1,5 @@
+package com.blogpoint.blog.model;
+
+public enum UserRole {
+    ADMIN, AUTHOR, READER
+}
