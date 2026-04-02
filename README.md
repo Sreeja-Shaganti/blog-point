@@ -303,33 +303,6 @@ APP_JWT_REFRESH_EXPIRATION=604800000
 
 See [docs/schema.sql](./docs/schema.sql) for complete schema definition.
 
-## 🐛 Troubleshooting
-
-### Docker Issues
-- **Image not found**: Dockerfile now uses `eclipse-temurin:21-jdk-slim` (fixed)
-- **Port already in use**: Change port in docker-compose.yml or kill process on 8080
-- See [docs/DOCKER_SETUP.md](./docs/DOCKER_SETUP.md) for more solutions
-
-### PostgreSQL Issues
-- **Connection refused**: Ensure PostgreSQL is running
-- **Database not found**: Create database as shown in [docs/MANUAL_SETUP.md](./docs/MANUAL_SETUP.md)
-- **Password authentication failed**: Check credentials in application.properties
-
-### Build Issues
-- **Maven compilation errors**: Run `mvn clean compile`
-- **Dependency issues**: Clear Maven cache: `mvn clean`
-- **Java version mismatch**: Verify Java 21: `java -version`
-
-See detailed troubleshooting in [docs/MANUAL_SETUP.md](./docs/MANUAL_SETUP.md) and [docs/DOCKER_SETUP.md](./docs/DOCKER_SETUP.md).
-
-## 📊 Performance Optimization
-
-- **Connection Pooling**: HikariCP with configurable pool size
-- **Database Indexing**: Indexes on frequently queried columns
-- **Pagination**: Efficient data retrieval with configurable page sizes
-- **Lazy Loading**: JPA relationships configured for lazy loading
-- **Caching**: Can be added using Spring Cache abstraction
-
 ## 🔄 JWT Token Management
 
 - **Access Token**: Valid for 1 hour (3600000 ms)
@@ -366,10 +339,6 @@ docker-compose -f docker-compose.prod.yml up -d
 1. Build JAR: `mvn clean package`
 2. Run JAR: `java -jar target/blog-point-app-0.0.1-SNAPSHOT.jar`
 
-## 📝 License
-
-This project is licensed under the MIT License.
-
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -377,20 +346,6 @@ This project is licensed under the MIT License.
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-## 📞 Support
-
-For issues, questions, or suggestions:
-1. Check the [docs](./docs/) directory
-2. Review [API_DOCUMENTATION.md](./docs/API_DOCUMENTATION.md)
-3. See [MANUAL_SETUP.md](./docs/MANUAL_SETUP.md) or [DOCKER_SETUP.md](./docs/DOCKER_SETUP.md)
-
-## 🎯 Next Steps
-
-1. **Setup**: Follow [DOCKER_SETUP.md](./docs/DOCKER_SETUP.md) or [MANUAL_SETUP.md](./docs/MANUAL_SETUP.md)
-2. **Test**: Access Swagger UI at http://localhost:8080/swagger-ui.html
-3. **Develop**: Explore API endpoints in [API_DOCUMENTATION.md](./docs/API_DOCUMENTATION.md)
-4. **Deploy**: Configure environment and run in production
 
 ---
 
